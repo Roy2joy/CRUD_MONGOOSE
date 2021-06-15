@@ -21,6 +21,17 @@ router.get('/reactor',(req,res)=>{
     //connect to backend 
 });
 
+router.get("/getAllPatients",(req,res)=>{
+    async function main(){
+        
+        let Hospitalobj=new package.Hospital();
+        answer=await Hospitalobj.getAllPatientInfo();
+    }
+
+    main().then(()=>{console.log(answer+"okokokokokokokokok"); res.send(answer);})
+    
+});
+
 router.get('/findDoctor', function (request, response) {  //whenever post and auth is used this functions call
 
     let answer="Error{debug}";

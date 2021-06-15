@@ -70,6 +70,18 @@ class AppointmentLog{
        return ret;
    }
 
+   async getMyAppointments(ID){
+        let ret;
+        ret=await this.#collectMyAppointments(ID);
+        return ret;
+    }
+
+    async #collectMyAppointments(ID){
+        let ret;
+        ret=await this.#PHobject.getMyAppointment(ID);
+        return ret;
+    }
+
    async #collectDocAppointment(DocID,Date){
         let ret;
         ret=await this.#PHobject.selectDoctorAppointment(DocID,Date);
@@ -323,7 +335,13 @@ class Patient{
         ret=await this.#fetchPatientDetail(PatID);
         return ret;
     }
-
+    
+    async getAllPatientDetail(){
+        let ret;
+        console.log("reached")
+        ret=await this.#PHobject.selectPatientInfo();
+        return ret;
+    }
     async updatePatientHistory(PatID,DocID,Date,Diagnosis,Prescription,Advice,NameOfDoctor)
     {
         let ret;

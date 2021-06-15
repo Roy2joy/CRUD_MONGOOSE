@@ -13,6 +13,14 @@ const package2=require('./class');
        this.#appLogObj=new package2.AppointmentLog();
    }
 
+   async getAllPatientInfo(){
+     //integration required pending
+     //call patient class from here.
+     let returnmsg=null;
+     returnmsg=await this.#patobj.getAllPatientDetail();
+     return returnmsg;       
+   }
+
    async login(ID,Password){
      //integration required pending
      //call patient class from here.
@@ -178,6 +186,15 @@ const package2=require('./class');
        ret=await this.#patobj.updatePatientHistory(PatID,DocID,Date,Diagnosis,Prescription,Advice,ret1);
        return ret;
 
+   }
+
+
+   async getMyAppointments(Id){
+    //    return "{my worlds}"
+        let ret1=Id;
+        ret1=await this.#appLogObj.getMyAppointments(Id);
+        console.log(ret1);
+        return ret1;
    }
 
    

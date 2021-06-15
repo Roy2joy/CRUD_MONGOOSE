@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express=require('express');
 //const cors=require('cors');
 const router=express.Router();
@@ -74,6 +75,17 @@ router.post('/login', function (request, response) {  //whenever post and auth i
     //console.log(username);
     //console.log(password);
 });
+
+router.post('/getMyAppointments',function(req,res){
+    
+     var Id=req.body.ID;
+    
+    async function main(){
+        let Hospitalobj=new package.Hospital();
+        answer=await Hospitalobj.getMyAppointments(Id);
+    }
+    main().then( ()=>{res.send(answer)});
+})
 
 router.post('/loginAdmin', function (request, response) {  //whenever post and auth is used this functions call
 
@@ -343,6 +355,31 @@ router.post('/checkDoctorAppointment', function (request, response) {  //wheneve
 
 
 router.post('/completeAppointment', function (request, response) {  //whenever post and auth is used this functions call
+
+    let answer="Error{debug}";
+    
+    let AppID=request.body.AppID;
+    
+    
+    
+    
+    
+    async function main(){
+        
+         let Hospitalobj=new package.Hospital();
+         answer=await Hospitalobj.completeAppointment(AppID);
+
+        // let Hospitalobj=new package.Hospital();
+        // answer=await Hospitalobj.confirmAppointment(DocID,PatID,Date,Time);
+        
+        //console.log(answer.count+"this is final")
+    }
+
+    main().then(()=>{ response.send(answer);})
+    
+});
+
+router.post('/completeAppointmentPatient', function (request, response) {  //whenever post and auth is used this functions call
 
     let answer="Error{debug}";
     

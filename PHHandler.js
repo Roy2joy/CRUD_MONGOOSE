@@ -15,6 +15,10 @@ class PersistenceHandler{
             throw new Error("Not implemented in drived classes");
     }
 
+    async selectPatientInfo(){ //return stringify of all values(JSON)
+        throw new Error("Not implemented in drived classes");
+    }
+
 
     async selectspecificperson(ID){ //return stringify of all values(JSON)
         throw new Error("Not implemented in drived classes");
@@ -111,6 +115,10 @@ class FileHandler extends PersistenceHandler{
           
     }
 
+    async selectPatientInfo(){ //return stringify of all values(JSON)
+        throw new Error("Not implemented in drived classes");
+    }
+
 
     async selectspecificperson(ID){ //return stringify of all values(JSON)
        
@@ -181,6 +189,10 @@ class FileHandler extends PersistenceHandler{
        
     }
 
+    async getMyAppointment(ID){
+
+    }
+
     async fetchPatientDetail(PatID){
        
 
@@ -235,6 +247,24 @@ class DBcontroller extends PersistenceHandler{
                           })();
         //console.log(p)
         return JSON.stringify(p.rows); 
+    }
+
+    async selectPatientInfo(){ //return stringify of all values(JSON)
+        let p;
+        let b_sync=await (async () => {
+            //const client = await this.#pool.connect();
+            await this.connectionEstablish();
+            
+            const query = "SELECT \"ID\",\"Name\",\"Age\",\"Gender\",\"Address\",\"ContactNumber\",\"CNIC\" FROM \"Patient\"";
+            //const cursor 
+            console.log("reached3");
+            p= await this.#connector.query(query);
+            console.log("reached4");    
+          })();
+        //console.log(p)
+        
+        return JSON.stringify(p.rows); 
+
     }
 
     async selectspecificperson(ID){ //return stringify of all values(JSON)
@@ -693,6 +723,40 @@ class DBcontroller extends PersistenceHandler{
         //     // ret1=JSON.stringify(ret1);
         //     // return ret1; 
         }         
+
+    }
+
+    async getMyAppointment(ID){
+        //try {
+            let p;
+            let b_sync=await (async () => {
+                                //const client = await this.#pool.connect();
+                                await this.connectionEstablish();
+                                const query = "select * from \"App_Log\" where \"Status\"="+true+" and \"PatID\"=\'"+ID+" \';";
+                                //console.log(query);
+                                //const cursor 
+                                p= await this.#connector.query(query);
+                                //console.log("ok till now \n")
+                              })();
+            //console.log(p);
+
+             let tret=JSON.stringify(p.rows); ;
+            //  tret=tret.slice(1,-1);
+             if(tret.length==2) {return {"status":"1","msg":"No Records","Data":"-1"} }
+            // console.log(tret)
+            tret=JSON.parse(tret);
+            // console.log(tret);
+            return {"status":"1","msg":"Record Found","Data":tret}
+            return tret;              
+            
+        // } catch (error) {
+        //     return {"status":"0","msg":"Error","Data":"-1"}
+        //   //  console.log("Error");
+        // //    throw new error("error");
+        // //     // let ret1={"status":"0","Date":"Error"};
+        // //     // ret1=JSON.stringify(ret1);
+        // //     // return ret1; 
+        // }         
 
     }
 
