@@ -67,6 +67,7 @@ router.get('/doctorOfDept', function (request, response) {  //whenever post and 
     main().then(()=>{console.log(answer); response.send(answer);})
     
 });
+//
 
 router.get('/checkDoctorAppointment', function (request, response) {  //whenever post and auth is used this functions call
 
