@@ -60,6 +60,40 @@ router.get('/getPatient',(req,res)=>{
 });
 
 
+router.get('/deletePatient',(req,res)=>{
+    Patient.remove({_id:"zulfi@gmail.com"} ,
+    (err,data)=>{
+        if(err){
+            console.log(err);
+            return res.send(err);
+        }
+        else{
+            console.log(data);
+            return res.json({message:"record has been deleted"})
+            //return res.send.json({message:"record has been deleted"});
+        }
+    })
+})
+
+router.get('/updatePatient',(req,res)=>{
+    Patient.findByIdAndUpdate(req.body.Id, {Name:req.body.Name} ,
+    (err,data)=>{
+        if(err){
+            console.log(err);
+            return res.send(err);
+        }
+        else{
+            console.log(data);
+            return res.json({message:"record has been deleted"})
+            //return res.send.json({message:"record has been deleted"});
+        }
+    })
+})
+
+
+
+
+
 router.get('/getData',(req,res)=>{
     console.log('get Data')
     res.send("get Data")
