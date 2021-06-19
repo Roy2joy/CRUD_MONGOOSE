@@ -15,6 +15,7 @@ const Post=require('../models/Post')
 
 router.post('/postData',async (req,res)=>{
     const post=new Post({
+        _id:req.body.Id,
         title:req.body.Title,
         description:req.body.Description
     });

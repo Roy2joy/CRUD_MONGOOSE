@@ -2,6 +2,10 @@
 const mongoose=require('mongoose');
 
 const PostSchema=mongoose.Schema({
+    _id:{
+        type:Number,
+        required:true
+    },
     title : {
         type:String,
         required:true
