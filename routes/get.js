@@ -103,6 +103,20 @@ router.get('/checkDoctorAppointment', function (request, response) {  //whenever
     
 });
 
+router.get('/myAppointment',function(request,res){
+    var Id=(request.url);
+    Id=Id.slice(-2);
+
+    //var Id=req.body.ID;
+//    console.log(Id)
+    let answer=""
+   async function main(){
+       let Hospitalobj=new package.Hospital();
+       answer=await Hospitalobj.getMyAppointments(Id);
+   }
+   console.log(answer);
+   main().then( ()=>{res.send(answer)});
+})
 
 router.get('/viewMedicalReport', function (request, response) {  //whenever post and auth is used this functions call
 

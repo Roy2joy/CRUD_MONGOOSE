@@ -8,47 +8,40 @@ const { Pool } = require('pg');   //for postgres
 const port = 3001 ;
 
 
-//implementation of cors ---to enable different domain checks --{standard}
-// var whitelist=[ 'https://znts-frontend.herokuapp.com/',
-//                 'http://localhost:3000',
-//                 'http://localhost:3001'
-//               ]
+const DB='mongodb+srv://HAdmin:nabeel123@cluster0.ypgny.mongodb.net/HMSDB?retryWrites=true&w=majority'
 
-// var corsOptionsDelegate=function(req,callback){
-//     var corsOptions;
-//     if(whitelist.indexOf(req.header('Origin'))!== -1){
-//         corsOptions={
-//             origin:true,
-//             credentials:true,
-//             exposedHeaders: ['set-cookie'] 
-//         }
-//     }
-//     else {
-//         corsOptions={
-//             origin:true,
-//             credentials:true,
-//             exposedHeaders: ['set-cookie'] 
-//         }
-//     }
-//     callback(null,corsOptions)
-    
-// }
+mongoose.connect(DB,{
+    useNewUrlParser:true,
+    useCreateIndex:true,
+    useUnifiedTopology:true,
+    useFindAndModify:false
+})
+.then(()=>{
+    console.log('Connection Successful');
+})
+.catch(()=>{
+    console.log('No connection')
+});
 
-// app.use(cors(corsOptionsDelegate));
+
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://HAdmin:nabeel123@cluster0.ypgny.mongodb.net/HMSDB?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(err => {
+
+//     var query = { name: "Talha" };
+
+//   //const collection = client.db("test").collection("devices");
+//     const collection = client.db("HMSDB").collection("Patient")//.find(query);
+//   // perform actions on the collection object
+//   console.log(collection)
+//   console.log("Connection established")
+//   client.close();
+// });
 
 app.use(cors())
 
 
-//////////////  implementation of cors and other things /////////////////////////////////////////////////////////////////
-
-
-//middle ware
-// app.use('/posts',(req,res)=>{
-//     res.send("this is middleware run whenever get posts hit.");
-// });
-
-//
-//app.use(cors());
 app.use(bodyParser.json());  //to parse JSON
 app.use(bodyParser.urlencoded({extended:true}));   //donot harm my code
 
@@ -57,13 +50,16 @@ const postsRoute=require('./routes/posts');
 const userRoute=require('./routes/get');
 const deleteRoute=require('./routes/delete');
 const putRoute=require('./routes/put');
+
+const testRoute=require('./routes/test')  //testing routes
+
 //routes
 app.use('/posts',postsRoute);
 app.use('/get',userRoute);    
 
 app.use('/delete',deleteRoute);
 app.use('/put',putRoute);
-
+app.use('/test',testRoute)   //testing routes
 
 
 app.get('/',(req,res)=>{
