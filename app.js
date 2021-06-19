@@ -8,9 +8,7 @@ const { Pool } = require('pg');   //for postgres
 const port = 3001 ;
 
 
-const DB='mongodb+srv://HAdmin:nabeel123@cluster0.ypgny.mongodb.net/HMSDB?retryWrites=true&w=majority'
-
-mongoose.connect(DB,{
+mongoose.connect(process.env.Mongo_connection,{
     useNewUrlParser:true,
     useCreateIndex:true,
     useUnifiedTopology:true,

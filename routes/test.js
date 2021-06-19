@@ -10,7 +10,60 @@ const router=express.Router();
 
 //importing models
 const Post=require('../models/Post')
+const Patient=require('../models/Patient');
 
+router.post('/postPatient',async (req,res)=>{
+    const patient=new Patient({
+        _id:req.body.Id,
+        Name:req.body.Name,
+        Age:req.body.Age,
+        Password:req.body.Password
+    });
+
+    console.log('\n\ndebug1')
+    try{
+        const savedPatient=await patient.save();
+        return res.status(200).json(savedPatient);
+    }catch(err){
+        console.log('inside catch\n')
+        return res.json({message:err});
+    }
+    // post.save()
+    // .then(data=>{
+    //     //res.status(200).json(data)  //printing data that DB respond in response to post.
+    //     res.json(data)  //printing data that DB respond in response to post.
+    // })
+    // .catch(err=>{
+    //     res.json({message:err});
+    // })
+
+    console.log('post Data')
+    console.log(req.body);
+    res.send("post Data")
+});
+
+
+
+router.get('/getPatient',(req,res)=>{
+    Patient.find({_id:"nabeelnoor914@gmail.com" } ,
+    (err,data)=>{
+        if(err){
+            console.log(err);
+            return res.send(err);
+        }
+        else{
+            console.log(data);
+            return res.send(data);
+        }
+    }
+    )
+});
+
+
+router.get('/getData',(req,res)=>{
+    console.log('get Data')
+    res.send("get Data")
+});
 
 
 router.post('/postData',async (req,res)=>{
@@ -42,10 +95,6 @@ router.post('/postData',async (req,res)=>{
     res.send("post Data")
 });
 
-router.get('/getData',(req,res)=>{
-    console.log('get Data')
-    res.send("get Data")
-});
 
 
 module.exports=router;

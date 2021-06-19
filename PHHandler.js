@@ -1,5 +1,5 @@
 const { json } = require('body-parser');
-const { Pool } = require('pg');   //for postgres
+//const { Pool } = require('pg');   //for postgres
 //const mongoose=require('mongoose');//for moongose
 require('dotenv/config');  //for hiding of connection string.
 
